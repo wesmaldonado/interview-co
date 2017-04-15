@@ -1,3 +1,13 @@
+## Overview
+
+The program uses the http://level-labs.com API [documented here](https://doc.level-labs.com) to provide basic reporting.
+
+The initial version accepts a single user for reporting.
+
+### Usage
+
+TODO
+
 ### Monthly Reporting ###
 
 Report how much money the user spends and makes in each of the months for which we have data.
