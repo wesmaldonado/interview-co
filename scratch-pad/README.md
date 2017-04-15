@@ -1,8 +1,15 @@
+# Approach
+
+I have 2 hours today to explore and get the bulk of the work done before Easter activities start.
+Sunday is spent driving so I need to capture enough detail to work offline in the car.
+
+## Exploration
+
 When exploring a new API I use the command line quite a bit.
 I tend to make small ruby snippets or shell scripts to get different output
 until I have confidence to move into a more formal TDD harness.
 
-# get all transactions #
+### get all transactions #
 
 Ran the docs curl command, prettied it up with jq.
 > `sh get_all_transactions.sh > get_all_transactions.output`
