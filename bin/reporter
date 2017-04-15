@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/reporter'
+
+begin
+  Reporter::Application.new(ARGV).run
+rescue OptionParser::InvalidOption => err
+  abort "reporter: #{err.message}\nusage: reporter TODO"
+end

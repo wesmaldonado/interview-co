@@ -6,7 +6,7 @@ The initial version accepts a single user for reporting.
 
 ### Usage
 
-TODO
+> `level-labs-reporting UID API_TOKEN [opts]`
 
 ### Monthly Reporting ###
 
