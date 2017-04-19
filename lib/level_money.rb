@@ -10,6 +10,7 @@ class CLI < Thor
   desc "report", "Report average monthly spending for your Level Money Account Transactions"
   method_option :ignore_donuts, :type => :boolean, :default => false
   def report(*params)
+    puts "options are #{options.inspect}"
     unless options[:level_api_token] && options[:level_auth_token] && options[:level_uid]
       $stderr.puts "API Credentials not found, please run: levelmoney credentials"
       exit -1
@@ -32,8 +33,8 @@ class CLI < Thor
       exit -1
     end
     puts '# Evaluate this in your shell.'
-    puts "set LEVEL_API_TOKEN='#{api_token}'"
-    puts "set LEVEL_AUTH='#{j["token"]}'"
-    puts "set LEVEL_UID='#{j["uid"]}'"
+    puts "export LEVEL_API_TOKEN='#{api_token}'"
+    puts "export LEVEL_AUTH_TOKEN='#{j["token"]}'"
+    puts "export LEVEL_UID='#{j["uid"]}'"
   end
 end
