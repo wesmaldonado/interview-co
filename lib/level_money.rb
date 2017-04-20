@@ -23,6 +23,7 @@ class CLI < Thor
   end
 
   desc "credentials", "Uses `curl` command to display populated ENV variables required by this program."
+  method_option :level_uid, :required => false
   def credentials(api_token = 'AppTokenForInterview')
     email = ask 'What is your account email?'
     password = ask 'What is your account password?', :echo => false
