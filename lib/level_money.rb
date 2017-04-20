@@ -19,7 +19,7 @@ class CLI < Thor
     client = LevelMoney::API.new(options[:level_api_token], options[:level_auth_token], options[:level_uid])
     ts = client.get_all_transactions
     report = LevelMoney::MonthlyReport.new(LevelMoney::Transactions.from_api_client(ts['transactions']))
-    puts report.to_report_data
+    puts report.to_report_data.to_json
   end
 
   desc "credentials", "Uses `curl` command to display populated ENV variables required by this program."

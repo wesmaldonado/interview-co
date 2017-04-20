@@ -7,12 +7,12 @@ RSpec.describe LevelMoney::MonthlyReport do
   }
   it "produces an empty report" do
     report = LevelMoney::MonthlyReport.new(LevelMoney::Transactions.from_api_client([]))
-    expect(report.to_report_data).to eq({})
+    expect(report.to_report_data).to eq({"average"=>{"spent"=>"$0.00", "income"=>"$0.00"}})
   end
 
   it "produces the report" do
     report = LevelMoney::MonthlyReport.new(LevelMoney::Transactions.from_api_client([transaction_data_from_api]))
-    expect(report.to_report_data).to eq({ "2017-04" => {"spent": "$100.00", "income": "$0.00"}})
+    expect(report.to_report_data).to eq({ "2017-04" => {"spent" => "$100.00", "income" => "$0.00"},"average" => {"spent"=>"$100.00", "income"=>"$100.00"}})
   end
 end
 

@@ -31,16 +31,14 @@ class LevelMoney::MonthlyReport
           total_income += t.amount
         end
       end
-      r[k] = {"spent": LevelMoney.to_usd(spent), "income": LevelMoney.to_usd(income)}
+      r[k] = {"spent" => LevelMoney.to_usd(spent), "income" => LevelMoney.to_usd(income)}
     end
     # Create "average" month
-    avg_spent = (total_spent / g.keys.size)
-    avg_income = (total_income / g.keys.size)
-
-    r["average"] = {"spent": LevelMoney.to_usd(avg_spent), "income": LevelMoney.to_usd(avg_income)}
-    # Spent is a debit
-    # Income is a debit
-    r 
+    total_monthly_summaries = g.keys.size
+    avg_spent  = (total_monthly_summaries > 0) ? (total_spent / total_monthly_summaries) : total_spent
+    avg_income = (total_monthly_summaries > 0) ? (total_spent / total_monthly_summaries) : total_income
+    r["average"] = {"spent" => LevelMoney.to_usd(avg_spent), "income" => LevelMoney.to_usd(avg_income)}
+    r
   end
 end
 class LevelMoney::Transaction
