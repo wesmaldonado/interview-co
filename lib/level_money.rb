@@ -1,5 +1,7 @@
 require 'thor'
 require 'json'
+require_relative 'level_money_api/client'
+require_relative 'level_money/transaction'
 
 class CLI < Thor
   include Thor::Actions
@@ -10,12 +12,14 @@ class CLI < Thor
   desc "report", "Report average monthly spending for your Level Money Account Transactions"
   method_option :ignore_donuts, :type => :boolean, :default => false
   def report(*params)
-    puts "options are #{options.inspect}"
     unless options[:level_api_token] && options[:level_auth_token] && options[:level_uid]
       $stderr.puts "API Credentials not found, please run: levelmoney credentials"
       exit -1
     end
-    puts "options are #{options.inspect}"
+    client = LevelMoney::API.new(options[:level_api_token], options[:level_auth_token], options[:level_uid])
+    ts = client.get_all_transactions
+    report = LevelMoney::MonthlyReport.new(LevelMoney::Transactions.from_api_client(ts['transactions']))
+    puts report.to_report_data
   end
 
   desc "credentials", "Uses `curl` command to display populated ENV variables required by this program."

@@ -19,17 +19,25 @@ class LevelMoney::MonthlyReport
     r = {}
     spent = 0
     income = 0
+    total_spent = 0
+    total_income = 0
     g.keys.each do |k|
       g[k].each do |t|
         if t.debit?
           spent -= t.amount
+          total_spent -= t.amount
         else
-          income+= t.amount
+          income += t.amount
+          total_income += t.amount
         end
       end
       r[k] = {"spent": LevelMoney.to_usd(spent), "income": LevelMoney.to_usd(income)}
     end
+    # Create "average" month
+    avg_spent = (total_spent / g.keys.size)
+    avg_income = (total_income / g.keys.size)
 
+    r["average"] = {"spent": LevelMoney.to_usd(avg_spent), "income": LevelMoney.to_usd(avg_income)}
     # Spent is a debit
     # Income is a debit
     r 
