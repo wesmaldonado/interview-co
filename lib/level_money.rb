@@ -12,6 +12,12 @@ class CLI < Thor
   desc "report", "Report average monthly spending for your Level Money Account Transactions"
   method_option :ignore_donuts, :type => :boolean, :default => false
   def report(*params)
+    exclude_transactions_by_merchant = []
+    if options[:ignore_donuts]
+      donut_excludes = ["Krispy Kreme Donuts","DUNKIN #336784"]
+      exclude_transactions_by_merchant+ donut_excludes
+    end
+
     unless options[:level_api_token] && options[:level_auth_token] && options[:level_uid]
       $stderr.puts "API Credentials not found, please run: levelmoney credentials"
       exit -1
@@ -19,6 +25,7 @@ class CLI < Thor
     client = LevelMoney::API.new(options[:level_api_token], options[:level_auth_token], options[:level_uid])
     ts = client.get_all_transactions
     report = LevelMoney::MonthlyReport.new(LevelMoney::Transactions.from_api_client(ts['transactions']))
+    report.exclude_transactions_by_merchant = exclude_transactions_by_merchant
     puts report.to_report_data.to_json
   end
 

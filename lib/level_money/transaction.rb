@@ -9,6 +9,21 @@ class LevelMoney::MonthlyReport
   # Expects LevelMoney::Transactions
   def initialize(transactions)
     @ts = transactions
+    @transaction_filters = []
+  end
+  def transactions
+   @ts.transactions
+  end
+  # Filter transactions by criteria such as the merchant field.
+  def add_transaction_filter(filter)
+    @transaction_filters << filter
+  end
+  def filter!
+    filtered = []
+    @transaction_filters.each do |f|
+      filtered << @ts.filter!(f)
+    end
+    filtered
   end
   def to_report_data
     g = Hash.new {|h,k| h[k] = [] } 
@@ -55,6 +70,9 @@ class LevelMoney::Transaction
   def transaction_id
     @params['transaction-id']
   end
+  def merchant
+    @params['merchant']
+  end
   def categorization 
     @params['categorization']
   end
@@ -83,8 +101,15 @@ class LevelMoney::Transactions
   def initialize(list = [])
     @transactions = list
   end
+  def transactions
+    @transactions.dup 
+  end
   def <<(i)
     @transactions << i
+  end
+  # filters are :field => :merchant, :matcher => 'value'
+  def filter!(filter)
+    @transactions.reject! { |t| puts t.send(filter[:field]); t.send(filter[:field]).downcase.include?(filter[:matcher].downcase) }
   end
   def size
     @transactions.size
