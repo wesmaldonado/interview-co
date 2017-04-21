@@ -20,10 +20,16 @@ class LevelMoney::MonthlyReport
   end
   def filter!
     filtered = []
-    @transaction_filters.each do |f|
-      filtered << @ts.filter!(f)
+    @transaction_filters.select{ |f| f[:scope] == :collection}.each do |f|
+        next unless f[:name] == :credit_card_payments
+        # "credit card payments are" opposite amounts (e.g. 5000000 centocents and -5000000 centocents) within 24 hours of each other
+        # credit and debit pairs with equal abs amount
+        # Ignore leap year and timezone issues in input by forcing to singular local timezone via to_time
+        # TODO
     end
-    filtered
+    @transaction_filters.select{ |f| f[:scope] == :transaction}.each do |f|
+      @ts.filter!(f)
+    end
   end
   def to_report_data
     g = Hash.new {|h,k| h[k] = [] } 
@@ -109,7 +115,11 @@ class LevelMoney::Transactions
   end
   # filters are :field => :merchant, :matcher => 'value'
   def filter!(filter)
-    @transactions.reject! { |t| puts t.send(filter[:field]); t.send(filter[:field]).downcase.include?(filter[:matcher].downcase) }
+    # {:scope => :transaction, :merchant => { :matcher => 'ATM WITHDRAWAL' }}
+    # {:scope => :collection, :name => :credit_card_payments }
+    @transactions.reject! do  |t|
+      t.send(filter[:field]).downcase == filter[:matcher].downcase
+    end
   end
   def size
     @transactions.size

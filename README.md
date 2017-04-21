@@ -6,6 +6,23 @@ The initial version accepts a single user for reporting.
 
 ### Usage
 
+#### System Requirements
+
+* Tested with: ruby 2.4.x
+* Requires bundler be installed: `gem install bundler`
+
+#### Setup
+* Verify your ruby version is 2.4.x: `ruby -v`
+* Verify you have the bundler gem by running: `gem install bundler`
+* Clone the repo: `git clone git@github.com:wesmaldonado/interview-co.git`
+* Switch into the code and run the setup commands: `cd interview-co && bundle install`
+* Setup credendials by running: `bin/levelmoney credentials`
+* Learn about levelmoney by running the command: `bin/levelmoney`
+* Get a report: `bin/levelmoney report`
+* Get a report: `bin/levelmoney report --ignore-donuts`
+
+### Command Overview
+
 > `bin/levelmoney [command]
 
 Step 1: Setup credentials by running the following:
@@ -14,7 +31,9 @@ Step 1: Setup credentials by running the following:
 
 Step 2: Do some amazing reporting!
 
-> `bin/levelmoney report 
+> `bin/levelmoney report
+
+See full 
 
 ### Monthly Reporting ###
 

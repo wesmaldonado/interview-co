@@ -21,10 +21,34 @@ RSpec.describe LevelMoney::MonthlyReport do
   it "can exclude by transactions by merchant field" do
     report = report_with_one_transaction
     expect(report.transactions.size).to eq(1)
-    report.add_transaction_filter({:field => :merchant, :matcher => 'ATM WITHDRAWAL'})
+    report.add_transaction_filter({:scope => :transaction, :field => :merchant, :matcher => 'ATM WITHDRAWAL' })
     filtered = report.filter!
     expect(report.transactions.size).to eq(0)
+    expect(filtered.size).to eq(1)
   end
+  it "can exclude by transactions by merchant field" do
+    report = report_with_one_transaction
+    expect(report.transactions.size).to eq(1)
+    report.add_transaction_filter({:scope => :transaction, :field => :merchant, :matcher => 'ATM WITHDRAWAL' })
+    filtered = report.filter!
+    expect(report.transactions.size).to eq(0)
+    expect(filtered.size).to eq(1)
+  end
+  it "can exclude credit card transactions" do
+    pending("TODO")
+    # create report of transcactions where
+    # t.transaction_date + 24 hours crosses year
+    # t.transaction_date + 24 hours crosses month
+    # t.transaction_date + 24 hours crosses day
+    # TODO t.transaction_date + 24 hours crosses leap year boundary
+    # report = report_with_one_transaction
+    expect(report.transactions.size).to eq(1)
+    report.add_transaction_filter({:scope => :collection, :name => :credit_card_payments})
+    filtered = report.filter!
+    expect(report.transactions.size).to eq(0)
+    expect(filtered.size).to eq(1)
+  end
+
   it "produces the report" do
     report = LevelMoney::MonthlyReport.new(LevelMoney::Transactions.from_api_client([transaction_data_from_api]))
     expect(report.to_report_data).to eq({ "2017-04" => {"spent" => "$100.00", "income" => "$0.00"},"average" => {"spent"=>"$100.00", "income"=>"$100.00"}})
