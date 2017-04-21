@@ -16,7 +16,12 @@ The initial version accepts a single user for reporting.
 * Verify you have the bundler gem by running: `gem install bundler`
 * Clone the repo: `git clone git@github.com:wesmaldonado/interview-co.git`
 * Switch into the code and run the setup commands: `cd interview-co && bundle install`
-* Setup credendials by running: `bin/levelmoney credentials`
+* Setup credendials by running: `bin/levelmoney credentials` OR set the ENV variables below
+  > export LEVEL_API_TOKEN='YOUR_APP_TOKEN'
+
+  > export LEVEL_AUTH_TOKEN='YOUR_AUTH_TOKEN'
+
+  > export LEVEL_UID='YOUR_UID'
 * Learn about levelmoney by running the command: `bin/levelmoney`
 * Get a report: `bin/levelmoney report`
 * Get a report: `bin/levelmoney report --ignore-donuts`
