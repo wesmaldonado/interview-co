@@ -16,6 +16,7 @@ The initial version accepts a single user for reporting.
 * Verify you have the bundler gem by running: `gem install bundler`
 * Clone the repo: `git clone git@github.com:wesmaldonado/interview-co.git`
 * Switch into the code and run the setup commands: `cd interview-co && bundle install`
+* Verify the tests run: `bundle exec rspec`, output should have all tests pass, perhaps a pending test
 * Setup credendials by running: `bin/levelmoney credentials` OR set the ENV variables below
   > export LEVEL_API_TOKEN='YOUR_APP_TOKEN'
 
